@@ -1,5 +1,25 @@
 'use strict';
 
+/* ── THEME TOGGLE ── */
+const themeToggle = document.getElementById('themeToggle');
+
+function getTheme() {
+    return document.documentElement.getAttribute('data-theme') || 'light';
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+}
+
+themeToggle.addEventListener('click', () => {
+    setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+});
+
+// Sync aria-label on page load
+themeToggle.setAttribute('aria-label', getTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+
 /* ── NAV SCROLL STATE ── */
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
