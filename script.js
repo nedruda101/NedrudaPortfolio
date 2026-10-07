@@ -27,19 +27,16 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 /* ── ACTIVE NAV LINK ── */
-const navLinks = document.querySelectorAll('.nav__link[data-section]');
-const sections = document.querySelectorAll('section[id]');
-
+const navLinks = document.querySelectorAll('.nav-link[data-section]');
 function updateActive() {
-    const pos = window.scrollY + 100;
-    let current = '';
-    sections.forEach(s => {
-        if (pos >= s.offsetTop && pos < s.offsetTop + s.offsetHeight) current = s.id;
-    });
-    navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === current));
+    const links = Array.from(navLinks);
+    const hashLink = links.find(link => link.hash && link.hash === window.location.hash);
+    const currentPageLink = links.find(link => link.getAttribute('aria-current') === 'page');
+    const activeLink = hashLink || currentPageLink;
+    links.forEach(link => link.classList.toggle('active', link === activeLink));
 }
 
-window.addEventListener('scroll', updateActive, { passive: true });
+window.addEventListener('hashchange', updateActive);
 updateActive();
 
 /* ── MOBILE NAV TOGGLE ── */
@@ -47,12 +44,117 @@ const toggle = document.getElementById('navToggle');
 const menu   = document.getElementById('navMenu');
 let menuOpen = false;
 
-function openMenu()  { menuOpen = true;  toggle.classList.add('active'); menu.classList.add('open'); toggle.setAttribute('aria-expanded','true');  document.body.classList.add('nav-open'); }
-function closeMenu() { menuOpen = false; toggle.classList.remove('active'); menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); document.body.classList.remove('nav-open'); }
+if (toggle && menu) {
+    function openMenu()  { menuOpen = true;  toggle.classList.add('active'); menu.classList.add('open'); toggle.setAttribute('aria-expanded','true');  document.body.classList.add('nav-open'); }
+    function closeMenu() { menuOpen = false; toggle.classList.remove('active'); menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); document.body.classList.remove('nav-open'); }
 
-toggle.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
-document.querySelectorAll('.nav__link').forEach(l => l.addEventListener('click', closeMenu));
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) closeMenu(); });
+    toggle.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+    document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) closeMenu(); });
+}
+
+/* ── PROJECT FILTER TABS ── */
+const projectTabs = Array.from(document.querySelectorAll('[data-project-filter]'));
+const projectList = document.getElementById('project-list');
+const projectItems = projectList ? Array.from(projectList.querySelectorAll('.project-item')) : [];
+
+function activateProjectTab(tab, moveFocus) {
+    const filter = tab.dataset.projectFilter;
+    projectTabs.forEach(item => {
+        const selected = item === tab;
+        item.setAttribute('aria-selected', String(selected));
+        item.tabIndex = selected ? 0 : -1;
+    });
+    if (projectList) projectList.setAttribute('aria-labelledby', tab.id);
+    projectItems.forEach(item => {
+        item.hidden = filter !== 'all' && item.dataset.projectKind !== filter;
+    });
+    if (moveFocus) tab.focus();
+}
+
+projectTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activateProjectTab(tab, false));
+    tab.addEventListener('keydown', event => {
+        let nextIndex;
+        if (event.key === 'ArrowRight') nextIndex = (index + 1) % projectTabs.length;
+        else if (event.key === 'ArrowLeft') nextIndex = (index - 1 + projectTabs.length) % projectTabs.length;
+        else if (event.key === 'Home') nextIndex = 0;
+        else if (event.key === 'End') nextIndex = projectTabs.length - 1;
+        else return;
+        event.preventDefault();
+        activateProjectTab(projectTabs[nextIndex], true);
+    });
+});
+
+/* ── CERTIFICATE LIBRARY ── */
+const certificateDialog = document.getElementById('certificateDialog');
+if (certificateDialog) {
+    if (!window.portfolioCertificates) {
+        throw new Error('Certificate data could not be loaded.');
+    }
+    const certificateViewer = document.getElementById('certificateViewer');
+    const certificateDialogTitle = document.getElementById('certificateDialogTitle');
+    const certificateDialogOpen = document.getElementById('certificateDialogOpen');
+    const certificateLists = [
+        {
+            certificates: window.portfolioCertificates.technical,
+            count: document.getElementById('technicalCertificateCount'),
+            list: document.getElementById('technicalCertificateList')
+        },
+        {
+            certificates: window.portfolioCertificates.nontechnical,
+            count: document.getElementById('nontechnicalCertificateCount'),
+            list: document.getElementById('nontechnicalCertificateList')
+        }
+    ];
+
+    function openCertificate(certificate) {
+        if (!certificate.file.startsWith('cert/technical/') && !certificate.file.startsWith('cert/nontechnical/')) {
+            throw new Error('Certificate file is outside the expected certificate folders.');
+        }
+        if (!certificate.file.toLowerCase().endsWith('.pdf')) {
+            throw new Error('Certificate preview only supports PDF files.');
+        }
+        certificateDialogTitle.textContent = certificate.title;
+        const fileUrl = encodeURI(certificate.file);
+        certificateViewer.src = fileUrl;
+        certificateDialogOpen.href = fileUrl;
+        certificateDialog.showModal();
+    }
+
+    certificateLists.forEach(({ certificates, count, list }) => {
+        if (!Array.isArray(certificates) || !list || !count) {
+            throw new Error('Certificate list is missing or invalid.');
+        }
+        count.textContent = String(certificates.length);
+        certificates.forEach(certificate => {
+            const item = document.createElement('li');
+            const button = document.createElement('button');
+            button.className = 'certificate-link';
+            button.type = 'button';
+            button.setAttribute('aria-haspopup', 'dialog');
+            button.textContent = certificate.title;
+            button.addEventListener('click', () => openCertificate(certificate));
+            item.appendChild(button);
+            list.appendChild(item);
+        });
+    });
+
+    function closeCertificateDialog() {
+        certificateViewer.removeAttribute('src');
+        certificateDialogOpen.removeAttribute('href');
+        certificateDialog.close();
+    }
+
+    document.getElementById('certificateDialogBack').addEventListener('click', closeCertificateDialog);
+    document.getElementById('certificateDialogClose').addEventListener('click', closeCertificateDialog);
+    certificateDialog.addEventListener('click', event => {
+        if (event.target === certificateDialog) closeCertificateDialog();
+    });
+    certificateDialog.addEventListener('close', () => {
+        certificateViewer.removeAttribute('src');
+    });
+}
 
 /* ── SCROLL REVEAL ── */
 const reveals = document.querySelectorAll('.reveal');

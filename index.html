@@ -4,431 +4,231 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Rey Laurence Nedruda — IT Graduate & Full-Stack Developer specializing in Flutter, Laravel, PHP, and Firebase." />
+    <meta name="theme-color" content="#e9efed" />
     <title>Rey Laurence Nedruda | Developer Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <!-- No-flash theme init: runs before paint to avoid flicker -->
     <script>
-        (function() {
+        (function () {
             var saved = localStorage.getItem('theme');
-            var theme = saved === 'dark' || saved === 'light' ? saved : 'light';
-            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.setAttribute('data-theme', saved === 'dark' ? 'dark' : 'light');
         })();
     </script>
 </head>
 <body>
-
-<header class="nav" id="nav" role="banner">
-    <nav class="nav__inner">
-        <a href="#hero" class="nav__logo" aria-label="Home">RLN</a>
-
-        <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">
-            <span></span><span></span>
-        </button>
-
-        <ul class="nav__menu" id="navMenu" role="list">
-            <li><a href="#about"      class="nav__link" data-section="about">About</a></li>
-            <li><a href="#skills"     class="nav__link" data-section="skills">Skills</a></li>
-            <li><a href="#experience" class="nav__link" data-section="experience">Experience</a></li>
-            <li><a href="#projects"   class="nav__link" data-section="projects">Projects</a></li>
-            <li><a href="#education"  class="nav__link" data-section="education">Education</a></li>
-            <li><a href="#contact"    class="nav__link nav__link--cta" data-section="contact">Contact</a></li>
-        </ul>
-
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-            <!-- Moon icon: shown in light mode, clicking switches to dark -->
-            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </svg>
-            <!-- Sun icon: shown in dark mode, clicking switches to light -->
-            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/>
-                <line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/>
-                <line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-            </svg>
-        </button>
-    </nav>
+<header class="topbar" id="nav">
+    <a href="#hero" class="brand" aria-label="Rey Laurence Nedruda, home">
+        <span class="brand__mark">RLN</span>
+        <span class="brand__name">Rey Laurence Nedruda</span>
+    </a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+    </button>
 </header>
 
-<main>
-
-    <!-- ── HERO ── -->
-    <section id="hero" class="hero">
-        <div class="hero__top">
-            <span class="hero__tag">Open to Work</span>
-        </div>
-
-        <div class="hero__name-wrap">
-            <h1 class="hero__name">
-                <span class="hero__name-line">Rey Laurence</span>
-                <span class="hero__name-line hero__name-line--outline">Nedruda</span>
-            </h1>
-        </div>
-
-        <div class="hero__bottom">
-            <p class="hero__bio">
-                IT graduate building web & mobile experiences.
-                From personal projects to production features — I ship things that work.
-            </p>
-            <div class="hero__actions">
-                <a href="#projects" class="btn btn--fill">View Work</a>
-                <a href="mailto:nedrudarey101@gmail.com" class="btn btn--outline">Say Hello</a>
-                <a href="mailto:nedrudarey101@gmail.com" class="btn btn--outline">Resume</a>
+<main class="dashboard">
+    <aside class="column column--left" aria-label="Profile and skills">
+        <section class="card profile-card" id="about" aria-labelledby="profile-title">
+            <div class="card__eyebrow"><span class="status-dot"></span> At Accenture</div>
+            <div class="profile-card__identity">
+                <div class="avatar" aria-label="Initials RLN">RLN</div>
+                <div>
+                    <h2 id="profile-title">Rey Laurence Nedruda</h2>
+                    <p class="muted">IT Graduate &amp; Full-Stack Developer</p>
+                </div>
             </div>
-        </div>
+            <div class="profile-card__facts">
+                <div class="fact">
+                    <span class="fact__icon" aria-hidden="true">⌖</span>
+                    <span>Tupi, South Cotabato, Philippines</span>
+                </div>
+                <a class="fact" href="mailto:nedrudarey101@gmail.com">
+                    <span class="fact__icon" aria-hidden="true">@</span>
+                    <span>nedrudarey101@gmail.com</span>
+                </a>
+                <div class="fact">
+                    <span class="fact__icon" aria-hidden="true">↗</span>
+                    <span>Packaged App Development Associate · Accenture</span>
+                </div>
+            </div>
+            <details class="profile-about">
+                <summary>About me</summary>
+                <div class="details-copy">
+                    <p>I'm a recent <strong>Bachelor of Science in Information Technology</strong> graduate from South East Asian Institute of Technology (Tupi, South Cotabato, Philippines). My development journey spans both mobile and web — from building and shipping full applications from the ground up, to engineering production-level features during a hands-on internship.</p>
+                    <p>I care about clean code, meaningful user experiences, and building tools that actually work for the people who use them.</p>
+                </div>
+            </details>
+        </section>
 
-        <div class="hero__scroll-bar" aria-hidden="true">
-            <div class="hero__scroll-line"></div>
-        </div>
-    </section>
+        <section class="card skills-card" id="skills" aria-labelledby="skills-title">
+            <div class="card-heading">
+                <div><p class="eyebrow">Toolbox</p><h2 id="skills-title">Skills</h2></div>
+            </div>
+            <div class="skill-group">
+                <h3>Frontend</h3>
+                <ul class="tags">
+                    <li>HTML / CSS</li><li>JavaScript</li><li>React</li><li>Flutter</li><li>Tailwind CSS</li><li>Bootstrap</li>
+                </ul>
+            </div>
+            <div class="skill-group">
+                <h3>Backend</h3>
+                <ul class="tags">
+                    <li>PHP</li><li>Laravel</li><li>Node.js</li><li>MySQL</li><li>REST API</li><li>Firebase</li><li>OAuth</li><li>PostgreSQL</li><li>Java</li>
+                </ul>
+            </div>
+            <div class="skill-group">
+                <h3>Developer Tools</h3>
+                <ul class="tags"><li>Dart</li><li>Git / GitHub</li><li>VS Code</li><li>Android Studio</li></ul>
+            </div>
+            <div class="skill-group">
+                <h3>AI</h3>
+                <ul class="tags"><li>OpenAI</li><li>Hugging Face</li><li>Claude Code</li></ul>
+            </div>
+        </section>
+    </aside>
 
-    <!-- ── MARQUEE ── -->
-    <div class="marquee" aria-hidden="true">
-        <div class="marquee__track">
-            <span>Flutter</span><span>·</span>
-            <span>Laravel</span><span>·</span>
-            <span>Firebase</span><span>·</span>
-            <span>PHP</span><span>·</span>
-            <span>JavaScript</span><span>·</span>
-            <span>MySQL</span><span>·</span>
-            <span>GIS</span><span>·</span>
-            <span>Dart</span><span>·</span>
-            <span>React</span><span>·</span>
-            <span>Tailwind</span><span>·</span>
-            <span>Flutter</span><span>·</span>
-            <span>Laravel</span><span>·</span>
-            <span>Firebase</span><span>·</span>
-            <span>PHP</span><span>·</span>
-            <span>JavaScript</span><span>·</span>
-            <span>MySQL</span><span>·</span>
-            <span>GIS</span><span>·</span>
-            <span>Dart</span><span>·</span>
-            <span>React</span><span>·</span>
-            <span>Tailwind</span><span>·</span>
-        </div>
+    <div class="column column--center">
+        <section class="card hero-card" id="hero" aria-labelledby="hero-title">
+            <div class="hero-card__top">
+                <span class="eyebrow">Developer portfolio</span>
+            </div>
+            <h1 id="hero-title">Building digital<br />tools that work.</h1>
+            <p class="hero-card__summary">IT graduate building web &amp; mobile experiences. From personal projects to production features — I ship things that work.</p>
+            <div class="hero-card__bottom">
+                <div class="hero-card__actions">
+                    <a href="#projects" class="button button--primary">Explore projects</a>
+                    <a href="mailto:nedrudarey101@gmail.com" class="button button--quiet">Get in touch</a>
+                </div>
+                <span class="hero-card__location">Based in the Philippines</span>
+            </div>
+        </section>
+
+        <section class="card projects-card" id="projects" aria-labelledby="projects-title">
+            <div class="card-heading">
+                <div><p class="eyebrow">Selected work</p><h2 id="projects-title">Featured projects</h2></div>
+                <span class="card-heading__note">3 projects</span>
+            </div>
+            <div class="project-tabs" role="tablist" aria-label="Filter featured projects">
+                <button class="project-tab" id="tab-all" type="button" role="tab" aria-selected="true" aria-controls="project-list" tabindex="0" data-project-filter="all">All <span>3</span></button>
+                <button class="project-tab" id="tab-mobile" type="button" role="tab" aria-selected="false" aria-controls="project-list" tabindex="-1" data-project-filter="mobile">Mobile <span>1</span></button>
+                <button class="project-tab" id="tab-web" type="button" role="tab" aria-selected="false" aria-controls="project-list" tabindex="-1" data-project-filter="web">Web <span>2</span></button>
+            </div>
+            <div class="project-list" id="project-list" role="tabpanel" aria-labelledby="tab-all" tabindex="0">
+                <article class="project-item" data-project-kind="mobile">
+                    <div class="project-item__visual project-item__visual--study" aria-hidden="true"><span>SB</span></div>
+                    <div class="project-item__content">
+                        <div class="project-item__title"><h3>StudyBuddy</h3><span>Mobile App · Capstone</span></div>
+                        <p>A collaborative Android study app featuring group matching, real-time chat, a shared calendar, a gamified quiz system, and progress tracking — designed to boost student accountability and engagement.</p>
+                        <ul class="tags tags--project"><li>Flutter</li><li>Firebase Firestore</li><li>Firebase Functions</li><li>Firebase Auth</li><li>Google Sign-In API</li></ul>
+                        <details class="project-details">
+                            <summary>Project outcomes</summary>
+                            <ul><li>5 core modules delivered end-to-end using Agile SDLC</li><li>Gamified quiz engine with points &amp; badges increased user engagement</li><li>Full Android deployment with unit, integration &amp; alpha testing</li></ul>
+                        </details>
+                    </div>
+                    <a class="project-open" href="https://studybuddy-seait.netlify.app/" aria-label="Visit StudyBuddy" target="_blank" rel="noopener noreferrer">Open</a>
+                </article>
+                <article class="project-item" data-project-kind="web">
+                    <div class="project-item__visual project-item__visual--gis" aria-hidden="true"><span>GIS</span></div>
+                    <div class="project-item__content">
+                        <div class="project-item__title"><h3>PolWD Web GIS</h3><span>Web Platform · Internship</span></div>
+                        <p>Production-level frontend and backend enhancements for a live water utility Geographic Information System, expanding operational data visibility and streamlining staff workflows.</p>
+                        <ul class="tags tags--project"><li>JavaScript</li><li>PHP</li><li>HTML / CSS</li><li>MySQL</li><li>Git</li></ul>
+                        <details class="project-details">
+                            <summary>Project outcomes</summary>
+                            <ul><li>Expanded operational data visibility for utility staff</li><li>Reduced staff lookup time through improved interface</li><li>Clean Git history formed the basis of a team-wide training initiative</li></ul>
+                        </details>
+                    </div>
+                    <a class="project-open" href="https://polwd-web-gis.page.gd/" aria-label="Visit PolWD Web GIS" target="_blank" rel="noopener noreferrer">Open</a>
+                </article>
+                <article class="project-item" data-project-kind="web">
+                    <div class="project-item__visual project-item__visual--tourism" aria-hidden="true"><span>TT</span></div>
+                    <div class="project-item__content">
+                        <div class="project-item__title"><h3>Tupi Tourism System</h3><span>Web App · Full-Stack Project</span></div>
+                        <p>A full-stack tourism information system for Tupi, South Cotabato, built with PHP, MySQL, and Bootstrap. Visitors can browse and search destinations, leave ratings and comments, build a trip itinerary, and book visits — all backed by a complete admin panel for managing content and users.</p>
+                        <ul class="tags tags--project"><li>PHP</li><li>MySQL</li><li>PDO</li><li>Bootstrap 5</li><li>Chart.js</li><li>JavaScript</li></ul>
+                        <details class="project-details">
+                            <summary>Project outcomes</summary>
+                            <ul><li>Secure architecture: CSRF protection, PDO prepared statements, bcrypt hashing, and brute-force lockout</li><li>Admin dashboard with Chart.js analytics for activity logs, bookings, and user engagement</li><li>Personalized destination feed driven by user-selected interest preferences</li></ul>
+                        </details>
+                    </div>
+                    <a class="project-open" href="https://tupitourism.rf.gd/tourism-system-main/index.php" aria-label="Visit Tupi Tourism System" target="_blank" rel="noopener noreferrer">Open</a>
+                </article>
+            </div>
+        </section>
     </div>
 
-    <!-- ── ABOUT ── -->
-    <section id="about" class="section">
-        <div class="section__inner">
-            <div class="section__label-row">
-                <span class="section__num">01</span>
-                <span class="section__label">About</span>
+    <aside class="column column--right" aria-label="Experience and links">
+        <section class="card experience-card" id="experience" aria-labelledby="experience-title">
+            <div class="card-heading">
+                <div><p class="eyebrow">Career timeline</p><h2 id="experience-title">Experience</h2></div>
             </div>
-            <div class="about__grid">
-                <h2 class="about__heading reveal">
-                    Building<br />
-                    tools that<br />
-                    <em>actually work</em>
-                </h2>
-                <div class="about__body reveal">
-                    <p>
-                        I'm a recent <strong>Bachelor of Science in Information Technology</strong> graduate from South East Asian Institute of Technology (Tupi, South Cotabato, Philippines). My development journey spans both mobile and web — from building and shipping full applications from the ground up, to engineering production-level features during a hands-on internship.
-                    </p>
-
-                    <p>
-                        I care about clean code, meaningful user experiences, and building tools that actually work for the people who use them.
-                    </p>
-
+            <article class="timeline-item">
+                <div class="timeline-item__rail"><span></span></div>
+                <div class="timeline-item__body">
+                    <p class="timeline-item__date">Aug 2026 – Present</p>
+                    <h3>Packaged App Development Associate</h3>
+                    <p class="timeline-item__company">Accenture · Associate Software Engineer</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── SKILLS ── -->
-    <section id="skills" class="section section--alt">
-        <div class="section__inner">
-            <div class="section__label-row">
-                <span class="section__num">02</span>
-                <span class="section__label">Skills</span>
-            </div>
-
-            <h2 class="section__title reveal">Tech Stack</h2>
-
-            <div class="skills__grid">
-                <div class="skill-col reveal">
-                    <h3 class="skill-col__title">Frontend</h3>
-                    <ul class="skill-col__list">
-                        <li>HTML / CSS</li>
-                        <li>JavaScript</li>
-                        <li>React</li>
-                        <li>Flutter</li>
-                        <li>Tailwind CSS</li>
-                        <li>Bootstrap</li>
-                    </ul>
-                </div>
-
-                <div class="skill-col reveal">
-                    <h3 class="skill-col__title">Backend</h3>
-                    <ul class="skill-col__list">
-                        <li>PHP</li>
-                        <li>Laravel</li>
-                        <li>Node.js</li>
-                        <li>MySQL</li>
-                        <li>REST API</li>
-                        <li>Firebase</li>
-                        <li>OAuth</li>
-                        <li>PostgreSQL</li>
-                        <li>Java</li>
-                    </ul>
-                </div>
-
-                <div class="skill-col reveal">
-                    <h3 class="skill-col__title">Developer Tools</h3>
-                    <ul class="skill-col__list">
-                        <li>Dart</li>
-                        <li>Git / GitHub</li>
-                        <li>VS Code</li>
-                        <li>Android Studio</li>
-
-                    </ul>
-                </div>
-
-                <div class="skill-col reveal">
-                    <h3 class="skill-col__title">AI</h3>
-                    <ul class="skill-col__list">
-
-                        <li>OpenAI</li>
-                        <li>Hugging Face</li>
-                        <li>Claude Code</li>
-
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── EXPERIENCE ── -->
-    <section id="experience" class="section">
-        <div class="section__inner">
-            <div class="section__label-row">
-                <span class="section__num">03</span>
-                <span class="section__label">Experience</span>
-            </div>
-            <h2 class="section__title reveal">Where I've Worked</h2>
-
-            <div class="exp__item reveal">
-                <div class="exp__header">
-                    <div class="exp__meta">
-                        <span class="exp__period">Aug 2025 – Nov 2025</span>
-                        <span class="exp__location">Polomolok, South Cotabato, PH</span>
-                    </div>
-                    <div class="exp__title-row">
-                        <h3 class="exp__role">Software Development OJT Trainee</h3>
-                        <span class="exp__company">Polomolok Water District</span>
-                    </div>
-                </div>
-                <ul class="exp__bullets">
-                    <li>Engineered and shipped new features for the <strong>PolWD Web GIS platform</strong>, improving user accessibility and spatial data interaction for operational staff.</li>
-                    <li>Designed and delivered a <strong>Git &amp; GitHub training</strong> session for non-technical team members, reducing version control errors and improving collaborative workflows.</li>
-                    <li>Performed <strong>elevation profile analysis</strong> and consolidated geospatial data into the project database, directly supporting infrastructure planning.</li>
-                    <li>Adapted rapidly to unfamiliar GIS tooling, maintaining consistent delivery velocity throughout a fast-paced environment.</li>
-                </ul>
-                <div class="exp__tags">
-                    <span>JavaScript</span>
-                    <span>PHP</span>
-                    <span>MySQL</span>
-                    <span>GIS</span>
-                    <span>Git</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── PROJECTS ── -->
-    <section id="projects" class="section section--alt">
-        <div class="section__inner">
-            <div class="section__label-row">
-                <span class="section__num">04</span>
-                <span class="section__label">Projects</span>
-            </div>
-            <h2 class="section__title reveal">Things I've Built</h2>
-
-            <div class="projects__list">
-
-                <article class="project reveal">
-                    <a href="https://studybuddy-seait.netlify.app/" class="project-card__link" aria-label="Visit StudyBuddy" target="_blank" rel="noopener noreferrer">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                            <path d="M15 3h6v6"/>
-                            <path d="M10 14 21 3"/>
-                        </svg>
-                    </a>
-                    <div class="project__num">01</div>
-                    <div class="project__body">
-
-                        <div class="project__header">
-                            <h3 class="project__name">StudyBuddy</h3>
-                            <span class="project__type">Mobile App · Capstone</span>
-
-                        </div>
-
-                        <p class="project__summary">
-                            A collaborative Android study app featuring group matching, real-time chat, a shared calendar, a gamified quiz system, and progress tracking — designed to boost student accountability and engagement.
-                        </p>
-                        <ul class="project__outcomes">
-                            <li>5 core modules delivered end-to-end using Agile SDLC</li>
-                            <li>Gamified quiz engine with points &amp; badges increased user engagement</li>
-                            <li>Full Android deployment with unit, integration &amp; alpha testing</li>
+            </article>
+            <article class="timeline-item">
+                <div class="timeline-item__rail"><span></span></div>
+                <div class="timeline-item__body">
+                    <p class="timeline-item__date">Aug 2025 – Nov 2025</p>
+                    <h3>Software Development OJT Trainee</h3>
+                    <p class="timeline-item__company">Polomolok Water District</p>
+                    <p class="timeline-item__location">Polomolok, South Cotabato, PH</p>
+                    <details class="experience-details">
+                        <summary>Responsibilities &amp; impact</summary>
+                        <ul>
+                            <li>Engineered and shipped new features for the <strong>PolWD Web GIS platform</strong>, improving user accessibility and spatial data interaction for operational staff.</li>
+                            <li>Designed and delivered a <strong>Git &amp; GitHub training</strong> session for non-technical team members, reducing version control errors and improving collaborative workflows.</li>
+                            <li>Performed <strong>elevation profile analysis</strong> and consolidated geospatial data into the project database, directly supporting infrastructure planning.</li>
+                            <li>Adapted rapidly to unfamiliar GIS tooling, maintaining consistent delivery velocity throughout a fast-paced environment.</li>
                         </ul>
-                        <div class="project__tech">
-                            <span>Flutter</span>
-                            <span>Firebase Firestore</span>
-                            <span>Firebase Functions</span>
-                            <span>Firebase Auth</span>
-                            <span>Google Sign-In API</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="project reveal">
-                    <a href="https://polwd-web-gis.page.gd/" class="project-card__link" aria-label="Visit StudyBuddy" target="_blank" rel="noopener noreferrer">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                            <path d="M15 3h6v6"/>
-                            <path d="M10 14 21 3"/>
-                        </svg>
-                    </a>
-                    <div class="project__num">02</div>
-                    <div class="project__body">
-                        <div class="project__header">
-                            <h3 class="project__name">PolWD Web GIS</h3>
-                            <span class="project__type">Web Platform · Internship</span>
-                        </div>
-                        <p class="project__summary">
-                            Production-level frontend and backend enhancements for a live water utility Geographic Information System, expanding operational data visibility and streamlining staff workflows.
-                        </p>
-                        <ul class="project__outcomes">
-                            <li>Expanded operational data visibility for utility staff</li>
-                            <li>Reduced staff lookup time through improved interface</li>
-                            <li>Clean Git history formed the basis of a team-wide training initiative</li>
-                        </ul>
-                        <div class="project__tech">
-                            <span>JavaScript</span>
-                            <span>PHP</span>
-                            <span>HTML / CSS</span>
-                            <span>MySQL</span>
-                            <span>Git</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="project reveal">
-                    <a href="https://tupitourism.rf.gd/tourism-system-main/index.php" class="project-card__link" aria-label="Visit Tupi Tourism System" target="_blank" rel="noopener noreferrer">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                            <path d="M15 3h6v6"/>
-                            <path d="M10 14 21 3"/>
-                        </svg>
-                    </a>
-                    <div class="project__num">03</div>
-                    <div class="project__body">
-                        <div class="project__header">
-                            <h3 class="project__name">Tupi Tourism System</h3>
-                            <span class="project__type">Web App · Full-Stack Project</span>
-                        </div>
-                        <p class="project__summary">
-                            A full-stack tourism information system for Tupi, South Cotabato, built with PHP, MySQL, and Bootstrap. Visitors can browse and search destinations, leave ratings and comments, build a trip itinerary, and book visits — all backed by a complete admin panel for managing content and users.
-                        </p>
-                        <ul class="project__outcomes">
-                            <li>Secure architecture: CSRF protection, PDO prepared statements, bcrypt hashing, and brute-force lockout</li>
-                            <li>Admin dashboard with Chart.js analytics for activity logs, bookings, and user engagement</li>
-                            <li>Personalized destination feed driven by user-selected interest preferences</li>
-                        </ul>
-                        <div class="project__tech">
-                            <span>PHP</span>
-                            <span>MySQL</span>
-                            <span>PDO</span>
-                            <span>Bootstrap 5</span>
-                            <span>Chart.js</span>
-                            <span>JavaScript</span>
-                        </div>
-                    </div>
-                </article>
-
-
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ── EDUCATION ── -->
-    <section id="education" class="section">
-        <div class="section__inner">
-            <div class="section__label-row">
-                <span class="section__num">05</span>
-                <span class="section__label">Education</span>
-            </div>
-            <h2 class="section__title reveal">Academic Background</h2>
-
-            <div class="edu reveal">
-                <div class="edu__period">2022 – 2026</div>
-                <div class="edu__body">
-                    <h3 class="edu__degree">Bachelor of Science in Information Technology</h3>
-                    <p class="edu__school">South East Asian Institute of Technology</p>
-                    <p class="edu__location">Tupi, South Cotabato, Philippines</p>
+                    </details>
+                    <ul class="tags tags--small"><li>JavaScript</li><li>PHP</li><li>MySQL</li><li>GIS</li><li>Git</li></ul>
                 </div>
-            </div>
-        </div>
-    </section>
+            </article>
+        </section>
 
-    <!-- ── CONTACT ── -->
-    <section id="contact" class="section section--contact">
-        <div class="section__inner">
-            <div class="section__label-row">
-                <span class="section__num">06</span>
-                <span class="section__label">Contact</span>
+        <section class="card education-card" id="education" aria-labelledby="education-title">
+            <div class="card-heading">
+                <div><p class="eyebrow">Academic background</p><h2 id="education-title">Education</h2></div>
+                <span class="education-card__date">2022 – 2026</span>
             </div>
-            <div class="contact">
-                <h2 class="contact__heading reveal">
-                    Let's Work<br />
-                    <span class="contact__heading--outline">Together</span>
-                </h2>
-                <div class="contact__body reveal">
-                    <p>I'm open to full-time roles, freelance projects, and interesting collaborations. Whether you have a question or just want to say hi — my inbox is always open.</p>
-                    <a href="mailto:nedrudarey101@gmail.com" class="btn btn--fill btn--lg">
-                        Say Hello
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                    <div class="contact__links">
-                        <a href="mailto:nedrudarey101@gmail.com" class="contact__link">
-                            nedrudarey101@gmail.com
-                        </a>
-
-                        <a href="https://github.com/nedruda101" class="contact__link" target="_blank" rel="noopener">GitHub</a>
-                        <a href="#" class="contact__link" target="_blank" rel="noopener">LinkedIn</a>
-                    </div>
-                </div>
+            <h3>Bachelor of Science in Information Technology</h3>
+            <p>South East Asian Institute of Technology</p>
+            <span class="muted">Tupi, South Cotabato, Philippines</span>
+            <div class="education-credentials" aria-label="Certifications and training placeholders">
+                <span>Technical · 65</span>
+                <span>Non-technical · 23</span>
             </div>
-        </div>
-    </section>
+            <a class="education-more" href="education.html">Education &amp; certifications</a>
+        </section>
 
+        <section class="card links-card" id="contact" aria-labelledby="contact-title">
+            <div class="card-heading">
+                <div><p class="eyebrow">Let’s connect</p><h2 id="contact-title">Contact &amp; links</h2></div>
+            </div>
+            <p>I'm open to full-time roles, freelance projects, and interesting collaborations. Whether you have a question or just want to say hi — my inbox is always open.</p>
+            <a class="contact-email" href="mailto:nedrudarey101@gmail.com">nedrudarey101@gmail.com</a>
+            <div class="social-links">
+                <a href="https://github.com/nedruda101" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <span class="social-link social-link--unavailable" aria-label="LinkedIn profile link not provided">LinkedIn <span>link not provided</span></span>
+            </div>
+        </section>
+    </aside>
 </main>
 
-<footer class="footer">
-    <div class="footer__inner">
-        <span class="footer__logo">RLN</span>
-        <p class="footer__copy">Designed &amp; built by <strong>Rey Laurence Nedruda</strong> · 2025</p>
-        <div class="footer__socials">
-            <a href="mailto:nedrudarey101@gmail.com" aria-label="Email">Email</a>
-            <a href="https://github.com/nedruda101" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
-            <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
-        </div>
-    </div>
+<footer class="page-footer">
+    <span>RLN</span>
+    <p>Designed &amp; built by <strong>Rey Laurence Nedruda</strong> · 2025</p>
 </footer>
-
-<button class="back-top" id="backTop" aria-label="Back to top">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
-
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
 <script src="script.js"></script>
 </body>
 </html>
