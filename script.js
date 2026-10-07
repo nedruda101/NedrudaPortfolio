@@ -95,18 +95,11 @@ if (certificateDialog) {
     const certificateViewer = document.getElementById('certificateViewer');
     const certificateDialogTitle = document.getElementById('certificateDialogTitle');
     const certificateDialogOpen = document.getElementById('certificateDialogOpen');
-    const certificateLists = [
-        {
-            certificates: window.portfolioCertificates.technical,
-            count: document.getElementById('technicalCertificateCount'),
-            list: document.getElementById('technicalCertificateList')
-        },
-        {
-            certificates: window.portfolioCertificates.nontechnical,
-            count: document.getElementById('nontechnicalCertificateCount'),
-            list: document.getElementById('nontechnicalCertificateList')
-        }
-    ];
+    const certificateLists = ['technical', 'nontechnical'].map(category => ({
+        certificates: window.portfolioCertificates[category],
+        count: document.getElementById(`${category}CertificateCount`),
+        list: document.getElementById(`${category}CertificateList`)
+    })).filter(({ list, count }) => list && count);
 
     function openCertificate(certificate) {
         if (!certificate.file.startsWith('cert/technical/') && !certificate.file.startsWith('cert/nontechnical/')) {
@@ -123,7 +116,7 @@ if (certificateDialog) {
     }
 
     certificateLists.forEach(({ certificates, count, list }) => {
-        if (!Array.isArray(certificates) || !list || !count) {
+        if (!Array.isArray(certificates)) {
             throw new Error('Certificate list is missing or invalid.');
         }
         count.textContent = String(certificates.length);
@@ -136,6 +129,16 @@ if (certificateDialog) {
             button.textContent = certificate.title;
             button.addEventListener('click', () => openCertificate(certificate));
             item.appendChild(button);
+            if (certificate.verificationUrl) {
+                const verificationLink = document.createElement('a');
+                verificationLink.className = 'certificate-verify';
+                verificationLink.href = certificate.verificationUrl;
+                verificationLink.target = '_blank';
+                verificationLink.rel = 'noopener noreferrer';
+                verificationLink.textContent = 'Verify';
+                verificationLink.setAttribute('aria-label', `Verify ${certificate.title}`);
+                item.appendChild(verificationLink);
+            }
             list.appendChild(item);
         });
     });
